@@ -7,7 +7,7 @@ body, html {
     align-items: center;
     background-color: #f0f0f0;
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    background-image: url('bg.png'); /* Pokéball image */
+    background-image: url('assets/bg.png'); /* Pokéball image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -22,6 +22,7 @@ body, html {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 400px;
+    margin-top: 70px;
 }
 
 /* Style the Pokémon image */

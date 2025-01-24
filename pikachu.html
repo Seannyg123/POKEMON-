@@ -25,7 +25,7 @@
 <body>
     <div class="scoreboard" id="scoreboard">Score: 0</div>
     <div class="container">
-        <img src="pika-shadow.jpg" alt="Pikachu" class="pokemon-image" id="pokemonImage">
+        <img src="assets/pika-shadow.jpg" alt="Pikachu" class="pokemon-image" id="pokemonImage">
         <div class="buttons-container">
             <button class="button" id="pikachu">Pikachu</button>
             <button class="button" id="gengar">Gengar</button>
@@ -41,19 +41,19 @@
 
         // Add event listeners to buttons
         document.getElementById('pikachu').addEventListener('click', function () {
-            handleAnswer(true, 'Pika reveal.webp'); // Correct choice (Pikachu)
+            handleAnswer(true, 'assets/Pika reveal.webp'); // Correct choice (Pikachu)
         });
 
         document.getElementById('gengar').addEventListener('click', function () {
-            handleAnswer(false, 'Pika reveal.webp'); // Incorrect choice
+            handleAnswer(false, 'assets/Pika reveal.webp'); // Incorrect choice
         });
 
         document.getElementById('ekans').addEventListener('click', function () {
-            handleAnswer(false, 'Pika reveal.webp'); // Incorrect choice
+            handleAnswer(false, 'assets/Pika reveal.webp'); // Incorrect choice
         });
 
         document.getElementById('munchlax').addEventListener('click', function () {
-            handleAnswer(false, 'Pika reveal.webp'); // Incorrect choice
+            handleAnswer(false, 'assets/Pika reveal.webp'); // Incorrect choice
         });
 
         // Function to handle the answer
