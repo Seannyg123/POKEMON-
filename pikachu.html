@@ -5,8 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon Game</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .scoreboard {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <div class="scoreboard" id="scoreboard">Score: 0</div>
     <div class="container">
         <img src="pika-shadow.jpg" alt="Pikachu" class="pokemon-image" id="pokemonImage">
         <div class="buttons-container">
@@ -15,48 +32,56 @@
             <button class="button" id="ekans">Ekans</button>
             <button class="button" id="munchlax">Munchlax</button>
         </div>
-        <a href="Pokedex.html">POKEDEX</a>
+        <a href="Pokedex.html" id="pokedexLink" class="hidden">POKEDEX</a>
     </div>
 
     <script>
+        // Track if the user has already clicked a button
+        let hasAnswered = false;
+
         // Add event listeners to buttons
-        document.getElementById('pikachu').addEventListener('click', function() {
-            highlightContainer(true, 'Pika reveal.webp'); // Correct choice (Pikachu)
+        document.getElementById('pikachu').addEventListener('click', function () {
+            handleAnswer(true, 'Pika reveal.webp'); // Correct choice (Pikachu)
         });
 
-        document.getElementById('gengar').addEventListener('click', function() {
-            highlightContainer(false, 'Pika reveal.webp'); // Incorrect choice
+        document.getElementById('gengar').addEventListener('click', function () {
+            handleAnswer(false, 'Pika reveal.webp'); // Incorrect choice
         });
 
-        document.getElementById('ekans').addEventListener('click', function() {
-            highlightContainer(false, 'Pika reveal.webp'); // Incorrect choice
+        document.getElementById('ekans').addEventListener('click', function () {
+            handleAnswer(false, 'Pika reveal.webp'); // Incorrect choice
         });
 
-        document.getElementById('munchlax').addEventListener('click', function() {
-            highlightContainer(false, 'Pika reveal.webp'); // Incorrect choice
+        document.getElementById('munchlax').addEventListener('click', function () {
+            handleAnswer(false, 'Pika reveal.webp'); // Incorrect choice
         });
 
-        // Function to highlight container and change the image based on correct/incorrect choice
-        function highlightContainer(isCorrect, newImage) {
-            // Get the container and the image element
+        // Function to handle the answer
+        function handleAnswer(isCorrect, newImage) {
+            // If the user has already answered, prevent further actions
+            if (hasAnswered) return;
+            hasAnswered = true;
+
+            // Get the container, image, and scoreboard elements
             const container = document.querySelector('.container');
             const pokemonImage = document.getElementById('pokemonImage');
+            const scoreboard = document.getElementById('scoreboard');
+            const pokedexLink = document.getElementById('pokedexLink');
 
-            // Change the container background color based on correct/incorrect choice
+            // Change container color and image based on the answer
             if (isCorrect) {
                 container.style.backgroundColor = '#4CAF50'; // Green for correct choice
+                scoreboard.textContent = 'Score: 1'; // Add score
             } else {
                 container.style.backgroundColor = '#f44336'; // Red for incorrect choice
+                scoreboard.textContent = 'Score: 0'; // No score for incorrect choice
             }
 
-            // Change the image to the new one
+            // Update the image
             pokemonImage.src = newImage;
 
-            // Optionally reset the color and image after a short delay
-            setTimeout(function() {
-                container.style.backgroundColor = 'rgba(255, 203, 5, 0.8)'; // Reset to original color (Pikachu yellow)
-                pokemonImage.src = 'pika-shadow.jpg'; // Reset to original image (Pikachu)
-            }, 1000); // Reset after 1 second
+            // Show Pokedex link
+            pokedexLink.classList.remove('hidden');
         }
     </script>
 </body>
