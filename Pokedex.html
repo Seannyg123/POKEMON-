@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon QR Code Scanner</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        text-align: center;
+        color: #333;
+      }
+      h1 {
+        color: #ffcc00;
+        font-size: 36px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+      }
+      #canvas {
+        border: 5px solid #ffcc00;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+      #output {
+        margin-top: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #ff3333;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      }
+      #output::before {
+        content: 'Detected Pokémon QR Code: ';
+      }
+      .pokemon-logo {
+        width: 200px;
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pokémon QR Code Scanner</h1>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pokémon Logo" class="pokemon-logo" />
+    <video id="video" width="640" height="480" style="display: none"></video>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <div id="output"></div>
+
+    <script>
+      const video = document.createElement("video");
+      const canvasElement = document.getElementById("canvas");
+      const canvas = canvasElement.getContext("2d");
+      const output = document.getElementById("output");
+
+      // Pokémon background music
+      const audio = new Audio("https://www.pokemon.com/us/pokemon-episodes/sounds/pokemon-theme-song.mp3");
+
+      navigator.mediaDevices
+        .getUserMedia({ video: { facingMode: "environment" } })
+        .then(function (stream) {
+          video.srcObject = stream;
+          video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+          video.play();
+          requestAnimationFrame(tick);
+        });
+
+      function tick() {
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+          canvasElement.hidden = false;
+          canvasElement.height = video.videoHeight;
+          canvasElement.width = video.videoWidth;
+          canvas.drawImage(
+            video,
+            0,
+            0,
+            canvasElement.width,
+            canvasElement.height
+          );
+          const imageData = canvas.getImageData(
+            0,
+            0,
+            canvasElement.width,
+            canvasElement.height
+          );
+          const code = jsQR(imageData.data, imageData.width, imageData.height, {
+            inversionAttempts: "dontInvert",
+          });
+
+          // check if a QR code was detected, 
+          // if there is one, display the value using the code.data property
+          if (code) {
+            output.innerText = `QR Code Value: ${code.data}`;
+            console.log("QR Code detected:", code.data);
+            // Play Pokémon theme music when a QR code is detected
+            audio.play();
+          } else {
+            console.log("No QR code detected.");
+          }
+        }
+        requestAnimationFrame(tick);
+      }
+    </script>
+  </body>
+</html>

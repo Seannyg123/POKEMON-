@@ -1,0 +1,82 @@
+/* Set a Pokémon-themed background using a Pokéball */
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-image: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'); /* Pokéball image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Container for the image and buttons */
+.container {
+    text-align: center;
+    background-color: rgba(255, 203, 5, 0.8); /* Pikachu yellow with opacity */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+}
+
+/* Style the Pokémon image */
+.pokemon-image {
+    display: block;
+    margin: 0 auto;
+    max-width: 250px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Style the button container and arrange buttons in a 2x2 grid */
+.buttons-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Style the individual buttons */
+.button {
+    padding: 12px 25px;
+    background-color: #ee2c2c; /* Pokémon red */
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+    background-color: #e41b1b; /* Darker red */
+    transform: scale(1.05);
+}
+
+.button:active {
+    transform: scale(0.98);
+}
+
+/* Button styling for active/hover states */
+button:focus {
+    outline: none;
+}
+
+/* Highlighting correct and incorrect choices */
+.correct {
+    background-color: #4CAF50; /* Green for correct choice */
+}
+
+.incorrect {
+    background-color: #f44336; /* Red for incorrect choice */
+}
