@@ -85,13 +85,21 @@
             inversionAttempts: "dontInvert",
           });
 
-          // check if a QR code was detected, 
-          // if there is one, display the value using the code.data property
+          // Check if a QR code was detected, 
+          // if there is one, display the value and redirect
           if (code) {
-            output.innerText = `QR Code Value: ${code.data}`;
+            output.innerText = `Detected QR Code: ${code.data}`;
             console.log("QR Code detected:", code.data);
             // Play Pokémon theme music when a QR code is detected
             audio.play();
+
+            // Check if the QR code contains a valid URL
+            try {
+              const url = new URL(code.data);
+              window.location.href = url.href;  // Redirect to the URL in the QR code
+            } catch (e) {
+              console.log("QR Code is not a valid URL:", code.data);
+            }
           } else {
             console.log("No QR code detected.");
           }
