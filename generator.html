@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Qr code</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      h2 {
+        color: black;
+        text-align: center;
+      }
+      /* General Body Styling */
+body {
+  font-family: 'Verdana', sans-serif;
+  text-align: center;
+  background: linear-gradient(to bottom, #ffcc00, #ff9900);
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Heading Styling */
+h2 {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 2.5rem;
+  color: #ff0000;
+  text-shadow: 2px 2px #333;
+  margin-bottom: 20px;
+}
+
+/* Container Styling */
+.container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  display: inline-block;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Input Field Styling */
+input[type="text"] {
+  width: 70%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Pokémon-Themed Button */
+button.pokemon-button {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 18px;
+  padding: 10px 20px;
+  color: white;
+  background: linear-gradient(to bottom, #ff0000, #cc0000);
+  border: 3px solid #333;
+  border-radius: 50px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button.pokemon-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(to bottom, #ff3333, #990000);
+}
+
+/* QR Code Styling */
+#qr-code-image {
+  margin-top: 20px;
+  border: 5px solid #333;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+    </style>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  </head>
+    <h2>UI QR Code Basic Generator<h2>
+    <input type="text" id="qr-code-value" placeholder="Enter a text or URL" value="https://www.google.com">
+    <button onclick="generateQRCode()"> Generate QR code</button> <br/>
+    <img id="qr-code-image" alt="QR code">
+
+
+    <script>
+      function generateQRCode() {
+        // Get the value entered by the user
+        const value = document.getElementById('qr-code-value').value;
+        // Set the options for the QR code in dictionary format
+        const options = {
+        value: value, // The text or URL to encode in the QR code
+        size: 400, // The size of the QR code in pixels
+        level: 'H' // The error correction level of the QR code
+        };
+        // Create a new QR code object
+        const qrCode = new QRious(options);
+        // Get the QR code image as a data URL
+        const qrCodeImage = qrCode.toDataURL();
+        // Display the QR code image on the webpage
+        // you can assign your default image here
+        document.getElementById('qr-code-image').src = qrCodeImage;
+      }
+    </script>
+  </body>
+</html>
