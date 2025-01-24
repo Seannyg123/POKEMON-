@@ -3,81 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pokédex QR Code Scanner</title>
+    <title>Pokémon QR Code Scanner</title>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <style>
       body {
         font-family: 'Arial', sans-serif;
-        background: url('https://example.com/pokedex-background.jpg') no-repeat center center fixed;
-        background-size: cover;
-        color: #333;
+        background-color: #f0f0f0;
         text-align: center;
+        color: #333;
       }
       h1 {
         color: #ffcc00;
-        font-size: 48px;
-        text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
-        font-family: 'Pokemon', sans-serif;
-        margin-top: 20px;
+        font-size: 36px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
       }
       #canvas {
         border: 5px solid #ffcc00;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        margin-top: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       }
       #output {
-        margin-top: 30px;
-        font-size: 26px;
+        margin-top: 20px;
+        font-size: 24px;
         font-weight: bold;
         color: #ff3333;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: 10px;
-        border-radius: 10px;
-        max-width: 80%;
-        margin-left: auto;
-        margin-right: auto;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
       }
       #output::before {
-        content: 'Pokémon Detected: ';
+        content: 'Detected Pokémon QR Code: ';
       }
       .pokemon-logo {
-        width: 250px;
-        margin-top: 20px;
-      }
-      .poke-ball {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 8px solid red;
-        margin: 20px 0;
-      }
-      .poke-ball:before {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 50%;
-        background-color: #fff;
-        border-bottom: 8px solid red;
-      }
-      .poke-ball:after {
-        content: '';
-        display: block;
-        width: 10px;
-        height: 10px;
-        background-color: black;
-        border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        width: 200px;
+        margin-top: 30px;
       }
     </style>
   </head>
   <body>
-    <h1>Pokédex QR Code Scanner</h1>
-    <div class="poke-ball"></div>
+    <h1>Pokémon QR Code Scanner</h1>
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pokémon Logo" class="pokemon-logo" />
     <video id="video" width="640" height="480" style="display: none"></video>
     <canvas id="canvas" width="640" height="480"></canvas>
@@ -123,9 +85,10 @@
             inversionAttempts: "dontInvert",
           });
 
-          // Check if a QR code was detected and display Pokémon data
+          // check if a QR code was detected, 
+          // if there is one, display the value using the code.data property
           if (code) {
-            output.innerText = `Pokémon Detected: ${code.data}`;
+            output.innerText = `QR Code Value: ${code.data}`;
             console.log("QR Code detected:", code.data);
             // Play Pokémon theme music when a QR code is detected
             audio.play();
