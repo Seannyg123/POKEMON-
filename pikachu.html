@@ -83,6 +83,13 @@
             // Show Pokedex link
             pokedexLink.classList.remove('hidden');
         }
+        document.getElementById('finishGame').addEventListener('click', function () {
+            const score = 150; // Example score, update dynamically based on your game logic
+            localStorage.setItem('score', score); // Store the score in localStorage
+
+            // Redirect to the Gengar page (the next QR code link)
+            window.location.href = 'gengar.html'; // Ensure the URL matches your QR code
+        });
     </script>
 </body>
 </html>

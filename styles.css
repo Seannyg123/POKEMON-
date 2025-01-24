@@ -7,7 +7,7 @@ body, html {
     align-items: center;
     background-color: #f0f0f0;
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    background-image: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'); /* Pokéball image */
+    background-image: url('bg.png'); /* Pokéball image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

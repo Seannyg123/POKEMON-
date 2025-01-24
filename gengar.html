@@ -8,7 +8,8 @@
 </head>
 <body>
     <div class="container">
-        <img src="gengar-who.jpg" alt="Pikachu" class="pokemon-image" id="pokemonImage">
+        <div class="score-display" id="scoreDisplay"></div> <!-- Display the score -->
+        <img src="gengar-who.jpg" alt="Gengar" class="pokemon-image" id="pokemonImage">
         <div class="buttons-container">
             <button class="button" id="pikachu">Pikachu</button>
             <button class="button" id="gengar">Gengar</button>
@@ -20,43 +21,50 @@
 
     <script>
         // Add event listeners to buttons
+        
+        // Retrieve the score from localStorage
+        const score = localStorage.getItem('score'); // Get the score stored from the previous page
+
+        if (score) {
+            document.getElementById('scoreDisplay').textContent = `Your Score: ${score}`;
+        } else {
+            document.getElementById('scoreDisplay').textContent = 'No score available. Start from Pikachu page!';
+        }
+
+        // Event listeners for buttons (example game logic)
         document.getElementById('pikachu').addEventListener('click', function() {
-            highlightContainer(false, 'gengar-reveal.webp'); // Correct choice (Pikachu)
+            highlightContainer(false, 'gengar-reveal.webp');
         });
 
         document.getElementById('gengar').addEventListener('click', function() {
-            highlightContainer(true, 'gengar-reveal.webp'); // Incorrect choice
+            highlightContainer(true, 'gengar-reveal.webp');
         });
 
         document.getElementById('ekans').addEventListener('click', function() {
-            highlightContainer(false, 'gengar-reveal.webp'); // Incorrect choice
+            highlightContainer(false, 'gengar-reveal.webp');
         });
 
         document.getElementById('munchlax').addEventListener('click', function() {
-            highlightContainer(false, 'gengar-reveal.webp'); // Incorrect choice
+            highlightContainer(false, 'gengar-reveal.webp');
         });
 
-        // Function to highlight container and change the image based on correct/incorrect choice
+        // Function to highlight container and change the image
         function highlightContainer(isCorrect, newImage) {
-            // Get the container and the image element
             const container = document.querySelector('.container');
             const pokemonImage = document.getElementById('pokemonImage');
 
-            // Change the container background color based on correct/incorrect choice
             if (isCorrect) {
-                container.style.backgroundColor = '#4CAF50'; // Green for correct choice
+                container.style.backgroundColor = '#4CAF50';
             } else {
-                container.style.backgroundColor = '#f44336'; // Red for incorrect choice
+                container.style.backgroundColor = '#f44336';
             }
 
-            // Change the image to the new one
             pokemonImage.src = newImage;
 
-            // Optionally reset the color and image after a short delay
             setTimeout(function() {
-                container.style.backgroundColor = 'rgba(255, 203, 5, 0.8)'; // Reset to original color (Pikachu yellow)
-                pokemonImage.src = 'gengar-who.jpg'; // Reset to original image (Pikachu)
-            }, 1000); // Reset after 1 second
+                container.style.backgroundColor = 'rgba(255, 203, 5, 0.8)'; // Reset color
+                pokemonImage.src = 'gengar-who.jpg'; // Reset image
+            }, 1000);
         }
     </script>
 </body>
