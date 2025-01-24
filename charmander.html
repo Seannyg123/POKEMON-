@@ -8,12 +8,12 @@
 </head>
 <body>
     <div class="container">
-        <img src="bulbasur-who.jpg" alt="Pikachu" class="pokemon-image" id="pokemonImage">
+        <img src="charmander-who.jpg" alt="Pikachu" class="pokemon-image" id="pokemonImage">
         <div class="buttons-container">
-            <button class="button" id="pikachu">voltorb</button>
-            <button class="button" id="gengar">onyx</button>
-            <button class="button" id="ekans">snorlax</button>
-            <button class="button" id="bulbasur">bulbasur</button>
+            <button class="button" id="pikachu">arceus</button>
+            <button class="button" id="gengar">groudon</button>
+            <button class="button" id="charmander">charmander</button>
+            <button class="button" id="munchlax">ho-ho</button>
         </div>
         <a href="Pokedex.html">POKEDEX</a>
     </div>
@@ -21,19 +21,19 @@
     <script>
         // Add event listeners to buttons
         document.getElementById('pikachu').addEventListener('click', function() {
-            highlightContainer(false, 'bulbasur-reveal.jpg'); // Correct choice (Pikachu)
+            highlightContainer(false, 'charmander-reveal.jpg'); // Correct choice (Pikachu)
         });
 
         document.getElementById('gengar').addEventListener('click', function() {
-            highlightContainer(false, 'bulbasur-reveal.jpg'); // Incorrect choice
+            highlightContainer(false, 'charmander-reveal.jpg'); // Incorrect choice
         });
 
-        document.getElementById('ekans').addEventListener('click', function() {
-            highlightContainer(false, 'bulbasur-reveal.jpg'); // Incorrect choice
+        document.getElementById('charmander').addEventListener('click', function() {
+            highlightContainer(true, 'charmander-reveal.jpg'); // Incorrect choice
         });
 
-        document.getElementById('bulbasur').addEventListener('click', function() {
-            highlightContainer(true, 'bulbasur-reveal.jpg'); // Incorrect choice
+        document.getElementById('munchlax').addEventListener('click', function() {
+            highlightContainer(false, 'charmander-reveal.jpg'); // Incorrect choice
         });
 
         // Function to highlight container and change the image based on correct/incorrect choice
@@ -55,7 +55,7 @@
             // Optionally reset the color and image after a short delay
             setTimeout(function() {
                 container.style.backgroundColor = 'rgba(255, 203, 5, 0.8)'; // Reset to original color (Pikachu yellow)
-                pokemonImage.src = 'bulbasur-who.jpg'; // Reset to original image (Pikachu)
+                pokemonImage.src = 'charmander-who.jpg'; // Reset to original image (Pikachu)
             }, 1000); // Reset after 1 second
         }
     </script>
