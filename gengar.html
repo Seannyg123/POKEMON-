@@ -9,6 +9,9 @@
 </head>
 <body>
     <div class="appear-message" id="appearMessage"></div>
+    <h1>GUESS THE POKEMON</h1>
+    <p>by COOKIE BEARS</p>
+    <h2 class="message" id="message"></h2>
     <div class="container">
         <img src="assets/gengar-who.jpg" alt="Gengar" class="pokemon-image" id="pokemonImage">
         <div class="buttons-container">
@@ -44,38 +47,34 @@
 
        
         function handleAnswer(isCorrect, newImage) {
-           
-            if (hasAnswered) return;
-            hasAnswered = true;
+        if (hasAnswered) return;
+        hasAnswered = true;
 
-          
-            const container = document.querySelector('.container');
-            const pokemonImage = document.getElementById('pokemonImage');
-            const appearMessage = document.getElementById('appearMessage');
-            const pokedexLink = document.getElementById('pokedexLink');
+        const container = document.querySelector('.container');
+        const pokemonImage = document.getElementById('pokemonImage');
+        const message = document.getElementById('message');
+        const appearMessage = document.getElementById('appearMessage');
+        const pokedexLink = document.getElementById('pokedexLink');
 
-            if (isCorrect) {
-                container.style.backgroundColor = '#4CAF50'; 
-                appearMessage.textContent = '+1'; 
-            } else {
-                container.style.backgroundColor = '#f44336'; 
-                appearMessage.textContent = 'No score'; 
-            }
 
-          
-            pokemonImage.src = newImage;
-
-     
-            pokedexLink.classList.remove('hidden');
+        if (isCorrect) {
+            container.style.backgroundColor = '#4CAF50'; 
+            appearMessage.textContent = '+1'; 
+            message.textContent = 'YOU GOT IT RIGHT!';
+        } else {
+            container.style.backgroundColor = '#f44336'; 
+            appearMessage.textContent = 'No score'; 
+            message.textContent = 'YOU GOT IT WRONG-_-';
         }
 
-        document.getElementById('finishGame')?.addEventListener('click', function () {
-            const score = 150; 
-            localStorage.setItem('score', score); 
+    
+        pokemonImage.src = newImage;
 
-           
-            window.location.href = 'gengar.html'; // Ensure the URL matches your QR code
-        });
+
+        pokedexLink.style.display = 'block';
+    }
+
+        
     </script>
 </body>
 </html>
