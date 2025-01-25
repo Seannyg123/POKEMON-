@@ -5,41 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon Game</title>
     <link rel="stylesheet" href="styles.css">
-    
+  
 </head>
 <body>
     <div class="appear-message" id="appearMessage"></div>
     <div class="container">
-        <img src="assets/pika-shadow.jpg" alt="Pikachu" class="pokemon-image" id="pokemonImage">
+        <img src="assets/bulbasur-who.jpg" alt="bulbasur" class="pokemon-image" id="pokemonImage">
         <div class="buttons-container">
-            <button class="button" id="pikachu">Pikachu</button>
+            <button class="button" id="bulbasur">Bulbasur</button>
             <button class="button" id="gengar">Gengar</button>
-            <button class="button" id="ekans">Ekans</button>
             <button class="button" id="munchlax">Munchlax</button>
+            <button class="button" id="charmander">Charmander</button>
         </div>
-   
+      
     </div>
     <a href="Pokedex.html" id="pokedexLink">Click here to scan the next QR code</a>
-
 
     <script>
        
         let hasAnswered = false;
 
-        document.getElementById('pikachu').addEventListener('click', function () {
-            handleAnswer(true, 'assets/Pika reveal.webp'); // Correct choice (Pikachu)
+        document.getElementById('bulbasur').addEventListener('click', function () {
+            handleAnswer(true, 'assets/bulbasur-reveal.jpg'); // correct
         });
 
         document.getElementById('gengar').addEventListener('click', function () {
-            handleAnswer(false, 'assets/Pika reveal.webp'); // Incorrect choice
+            handleAnswer(false, 'assets/bulbasur-reveal.jpg'); // incorrect 
         });
 
-        document.getElementById('ekans').addEventListener('click', function () {
-            handleAnswer(false, 'assets/Pika reveal.webp'); // Incorrect choice
-        });
 
         document.getElementById('munchlax').addEventListener('click', function () {
-            handleAnswer(false, 'assets/Pika reveal.webp'); // Incorrect choice
+            handleAnswer(false, 'assets/bulbasur-reveal.jpg'); // Incorrect choice
+        });
+
+        document.getElementById('charmander').addEventListener('click', function () {
+            handleAnswer(false, 'assets/bulbasur-reveal.jpg');  // incorrect choice
         });
 
        
@@ -69,13 +69,6 @@
             pokedexLink.classList.remove('hidden');
         }
 
-        document.getElementById('finishGame')?.addEventListener('click', function () {
-            const score = 150; 
-            localStorage.setItem('score', score); 
-
-           
-            window.location.href = 'gengar.html'; // Ensure the URL matches your QR code
-        });
     </script>
 </body>
 </html>

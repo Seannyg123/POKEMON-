@@ -5,38 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokémon QR Code Scanner</title>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-    <style>
-      body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f0f0f0;
-        text-align: center;
-        color: #333;
-      }
-      h1 {
-        color: #ffcc00;
-        font-size: 36px;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
-      }
-      #canvas {
-        border: 5px solid #ffcc00;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      }
-      #output {
-        margin-top: 20px;
-        font-size: 24px;
-        font-weight: bold;
-        color: #ff3333;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-      }
-      #output::before {
-        content: 'Detected Pokémon QR Code: ';
-      }
-      .pokemon-logo {
-        width: 200px;
-        margin-top: 30px;
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+   
+
   </head>
   <body>
     <h1>Pokémon QR Code Scanner</h1>
@@ -85,13 +56,21 @@
             inversionAttempts: "dontInvert",
           });
 
-          // check if a QR code was detected, 
-          // if there is one, display the value using the code.data property
+          // Check if a QR code was detected, 
+          // if there is one, display the value and redirect
           if (code) {
-            output.innerText = `QR Code Value: ${code.data}`;
+            output.innerText = `Detected QR Code: ${code.data}`;
             console.log("QR Code detected:", code.data);
             // Play Pokémon theme music when a QR code is detected
             audio.play();
+
+            // Check if the QR code contains a valid URL
+            try {
+              const url = new URL(code.data);
+              window.location.href = url.href;  // Redirect to the URL in the QR code
+            } catch (e) {
+              console.log("QR Code is not a valid URL:", code.data);
+            }
           } else {
             console.log("No QR code detected.");
           }

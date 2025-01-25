@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon Game</title>
     <link rel="stylesheet" href="styles.css">
+  
 </head>
 <body>
+    <div class="appear-message" id="appearMessage"></div>
     <div class="container">
-        <div class="score-display" id="scoreDisplay"></div> <!-- Display the score -->
         <img src="assets/gengar-who.jpg" alt="Gengar" class="pokemon-image" id="pokemonImage">
         <div class="buttons-container">
             <button class="button" id="pikachu">Pikachu</button>
@@ -16,56 +17,65 @@
             <button class="button" id="ekans">Ekans</button>
             <button class="button" id="munchlax">Munchlax</button>
         </div>
-        <a href="Pokedex.html">POKEDEX</a>
+       
     </div>
 
+    <a href="Pokedex.html" id="pokedexLink">Click here to scan the next QR code</a>
+
     <script>
-        // Add event listeners to buttons
-        
-        // Retrieve the score from localStorage
-        const score = localStorage.getItem('score'); // Get the score stored from the previous page
+       
+        let hasAnswered = false;
 
-        if (score) {
-            document.getElementById('scoreDisplay').textContent = `Your Score: ${score}`;
-        } else {
-            document.getElementById('scoreDisplay').textContent = 'No score available. Start from Pikachu page!';
-        }
-
-        // Event listeners for buttons (example game logic)
-        document.getElementById('pikachu').addEventListener('click', function() {
-            highlightContainer(false, 'assets/gengar-reveal.webp');
+        document.getElementById('pikachu').addEventListener('click', function () {
+            handleAnswer(false, 'assets/gengar-reveal.webp'); // incorrect
         });
 
-        document.getElementById('gengar').addEventListener('click', function() {
-            highlightContainer(true, 'assets/gengar-reveal.webp');
+        document.getElementById('gengar').addEventListener('click', function () {
+            handleAnswer(true, 'assets/gengar-reveal.webp'); // correct choice
         });
 
-        document.getElementById('ekans').addEventListener('click', function() {
-            highlightContainer(false, 'assets/gengar-reveal.webp');
+        document.getElementById('ekans').addEventListener('click', function () {
+            handleAnswer(false, 'assets/gengar-reveal.webp'); // Incorrect choice
         });
 
-        document.getElementById('munchlax').addEventListener('click', function() {
-            highlightContainer(false, 'assets/gengar-reveal.webp');
+        document.getElementById('munchlax').addEventListener('click', function () {
+            handleAnswer(false, 'assets/gengar-reveal.webp'); // Incorrect choice
         });
 
-        // Function to highlight container and change the image
-        function highlightContainer(isCorrect, newImage) {
+       
+        function handleAnswer(isCorrect, newImage) {
+           
+            if (hasAnswered) return;
+            hasAnswered = true;
+
+          
             const container = document.querySelector('.container');
             const pokemonImage = document.getElementById('pokemonImage');
+            const appearMessage = document.getElementById('appearMessage');
+            const pokedexLink = document.getElementById('pokedexLink');
 
             if (isCorrect) {
-                container.style.backgroundColor = '#4CAF50';
+                container.style.backgroundColor = '#4CAF50'; 
+                appearMessage.textContent = '+1'; 
             } else {
-                container.style.backgroundColor = '#f44336';
+                container.style.backgroundColor = '#f44336'; 
+                appearMessage.textContent = 'No score'; 
             }
 
+          
             pokemonImage.src = newImage;
 
-            setTimeout(function() {
-                container.style.backgroundColor = 'rgba(255, 203, 5, 0.8)'; // Reset color
-                pokemonImage.src = 'assets/gengar-who.jpg'; // Reset image
-            }, 1000);
+     
+            pokedexLink.classList.remove('hidden');
         }
+
+        document.getElementById('finishGame')?.addEventListener('click', function () {
+            const score = 150; 
+            localStorage.setItem('score', score); 
+
+           
+            window.location.href = 'gengar.html'; // Ensure the URL matches your QR code
+        });
     </script>
 </body>
 </html>

@@ -10,36 +10,36 @@
 <body>
     <div class="appear-message" id="appearMessage"></div>
     <div class="container">
-        <img src="assets/pika-shadow.jpg" alt="Pikachu" class="pokemon-image" id="pokemonImage">
+        <img src="assets/koffing-who.jpg" alt="koffing" class="pokemon-image" id="pokemonImage">
         <div class="buttons-container">
-            <button class="button" id="pikachu">Pikachu</button>
             <button class="button" id="gengar">Gengar</button>
-            <button class="button" id="ekans">Ekans</button>
             <button class="button" id="munchlax">Munchlax</button>
+            <button class="button" id="koffing">Koffing</button>
+            <button class="button" id="charmander">Charmander</button>
         </div>
-   
     </div>
-    <a href="Pokedex.html" id="pokedexLink">Click here to scan the next QR code</a>
-
-
+  
+        <a href="Pokedex.html" id="pokedexLink">Click here to scan the next QR code</a>
+ 
     <script>
        
         let hasAnswered = false;
 
-        document.getElementById('pikachu').addEventListener('click', function () {
-            handleAnswer(true, 'assets/Pika reveal.webp'); // Correct choice (Pikachu)
+        document.getElementById('koffing').addEventListener('click', function () {
+            handleAnswer(true, 'assets/koffing-reveal.jpg'); // correct
         });
 
         document.getElementById('gengar').addEventListener('click', function () {
-            handleAnswer(false, 'assets/Pika reveal.webp'); // Incorrect choice
+            handleAnswer(false, 'assets/koffing-reveal.jpg'); // incorrect 
         });
 
-        document.getElementById('ekans').addEventListener('click', function () {
-            handleAnswer(false, 'assets/Pika reveal.webp'); // Incorrect choice
-        });
 
         document.getElementById('munchlax').addEventListener('click', function () {
-            handleAnswer(false, 'assets/Pika reveal.webp'); // Incorrect choice
+            handleAnswer(false, 'assets/koffing-reveal.jpg'); // Incorrect choice
+        });
+
+        document.getElementById('charmander').addEventListener('click', function () {
+            handleAnswer(false, 'assets/koffing-reveal.jpg');  // incorrect choice
         });
 
        
@@ -77,5 +77,6 @@
             window.location.href = 'gengar.html'; // Ensure the URL matches your QR code
         });
     </script>
+
 </body>
 </html>
