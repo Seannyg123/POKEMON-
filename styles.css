@@ -1,4 +1,4 @@
-/* Set a Pokémon-themed background using a Pokéball */
+
 body, html {
     height: 100%;
     margin: 0;
@@ -7,34 +7,68 @@ body, html {
     align-items: center;
     background-color: #f0f0f0;
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    background-image: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'); /* Pokéball image */
+    background-image: url('assets/bg.png'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+  
+
+    flex-direction: column;
+
 }
 
-/* Container for the image and buttons */
+.appear-message {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+#pokedexLink {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 20px;
+    margin: 20px auto;
+    font-size: 18px;
+    background-color: #28a745; 
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+#pokedexLink:hover {
+    background-color: #218838;
+}
+
+
+
 .container {
     text-align: center;
-    background-color: rgba(255, 205, 5, 0.281); /* Pikachu yellow with opacity */
+    background-color: rgba(255, 203, 5, 0.8);
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 400px;
+    margin-top: 70px;
 }
 
-/* Style the Pokémon image */
 .pokemon-image {
-    display: block;
-    margin: 0 auto;
-    max-width: 250px;
-    height: auto;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.158);
+  
+        max-width: 300px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+
 }
 
-/* Style the button container and arrange buttons in a 2x2 grid */
 .buttons-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -43,10 +77,10 @@ body, html {
     margin-top: 20px;
 }
 
-/* Style the individual buttons */
+
 .button {
     padding: 12px 25px;
-    background-color: #ee2c2c33; /* Pokémon red */
+    background-color: #ee2c2c33;
     border: none;
     border-radius: 8px;
     color: white;
@@ -59,7 +93,7 @@ body, html {
 }
 
 .button:hover {
-    background-color: #e41b1b48; /* Darker red */
+    background-color: #e41b1b48; 
     transform: scale(1.05);
 }
 
@@ -67,16 +101,42 @@ body, html {
     transform: scale(0.98);
 }
 
-/* Button styling for active/hover states */
+
 button:focus {
     outline: none;
 }
 
-/* Highlighting correct and incorrect choices */
+
 .correct {
-    background-color: #4caf4f56; /* Green for correct choice */
+    background-color: #4caf4f56;
 }
 
 .incorrect {
-    background-color: #f4433633; /* Red for incorrect choice */
+    background-color: #f4433633; 
 }
+
+
+h1 {
+    color: #ffcc00;
+    font-size: 36px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+  }
+  #canvas {
+    border: 5px solid #ffcc00;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+  #output {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff3333;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+  #output::before {
+    content: 'Detected Pokémon QR Code: ';
+  }
+  .pokemon-logo {
+    width: 200px;
+    margin-top: 30px;
+  }

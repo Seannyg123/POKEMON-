@@ -5,59 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon Game</title>
     <link rel="stylesheet" href="styles.css">
+  
 </head>
 <body>
+    <div class="appear-message" id="appearMessage"></div>
     <div class="container">
-        <img src="bulbasur-who.jpg" alt="Pikachu" class="pokemon-image" id="pokemonImage">
+        <img src="assets/bulbasur-who.jpg" alt="bulbasur" class="pokemon-image" id="pokemonImage">
         <div class="buttons-container">
-            <button class="button" id="pikachu">voltorb</button>
-            <button class="button" id="gengar">onyx</button>
-            <button class="button" id="ekans">snorlax</button>
-            <button class="button" id="bulbasur">bulbasur</button>
+            <button class="button" id="bulbasur">Bulbasur</button>
+            <button class="button" id="gengar">Gengar</button>
+            <button class="button" id="munchlax">Munchlax</button>
+            <button class="button" id="charmander">Charmander</button>
         </div>
-        <a href="Pokedex.html">POKEDEX</a>
+      
     </div>
+    <a href="Pokedex.html" id="pokedexLink">Click here to scan the next QR code</a>
 
     <script>
-        // Add event listeners to buttons
-        document.getElementById('pikachu').addEventListener('click', function() {
-            highlightContainer(false, 'bulbasur-reveal.jpg'); // Correct choice (Pikachu)
+       
+        let hasAnswered = false;
+
+        document.getElementById('bulbasur').addEventListener('click', function () {
+            handleAnswer(true, 'assets/bulbasur-reveal.jpg'); // correct
         });
 
-        document.getElementById('gengar').addEventListener('click', function() {
-            highlightContainer(false, 'bulbasur-reveal.jpg'); // Incorrect choice
+        document.getElementById('gengar').addEventListener('click', function () {
+            handleAnswer(false, 'assets/bulbasur-reveal.jpg'); // incorrect 
         });
 
-        document.getElementById('ekans').addEventListener('click', function() {
-            highlightContainer(false, 'bulbasur-reveal.jpg'); // Incorrect choice
+
+        document.getElementById('munchlax').addEventListener('click', function () {
+            handleAnswer(false, 'assets/bulbasur-reveal.jpg'); // Incorrect choice
         });
 
-        document.getElementById('bulbasur').addEventListener('click', function() {
-            highlightContainer(true, 'bulbasur-reveal.jpg'); // Incorrect choice
+        document.getElementById('charmander').addEventListener('click', function () {
+            handleAnswer(false, 'assets/bulbasur-reveal.jpg');  // incorrect choice
         });
 
-        // Function to highlight container and change the image based on correct/incorrect choice
-        function highlightContainer(isCorrect, newImage) {
-            // Get the container and the image element
+       
+        function handleAnswer(isCorrect, newImage) {
+           
+            if (hasAnswered) return;
+            hasAnswered = true;
+
+          
             const container = document.querySelector('.container');
             const pokemonImage = document.getElementById('pokemonImage');
+            const appearMessage = document.getElementById('appearMessage');
+            const pokedexLink = document.getElementById('pokedexLink');
 
-            // Change the container background color based on correct/incorrect choice
             if (isCorrect) {
-                container.style.backgroundColor = '#4CAF50'; // Green for correct choice
+                container.style.backgroundColor = '#4CAF50'; 
+                appearMessage.textContent = '+1'; 
             } else {
-                container.style.backgroundColor = '#f44336'; // Red for incorrect choice
+                container.style.backgroundColor = '#f44336'; 
+                appearMessage.textContent = 'No score'; 
             }
 
-            // Change the image to the new one
+          
             pokemonImage.src = newImage;
 
-            // Optionally reset the color and image after a short delay
-            setTimeout(function() {
-                container.style.backgroundColor = 'rgba(255, 203, 5, 0.8)'; // Reset to original color (Pikachu yellow)
-                pokemonImage.src = 'bulbasur-who.jpg'; // Reset to original image (Pikachu)
-            }, 10000); // Reset after 1 second
+     
+            pokedexLink.classList.remove('hidden');
         }
+
     </script>
 </body>
 </html>
