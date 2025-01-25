@@ -140,3 +140,9 @@ h1 {
     width: 200px;
     margin-top: 30px;
   }
+
+  h2{
+    background-color: rgb(250, 250, 250);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+  }
