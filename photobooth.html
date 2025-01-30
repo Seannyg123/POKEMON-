@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HCI Webcam</title>
+</head>
+<body>
+  <h2 style="background-color:white;opacity:0.5;">Human  Computer Interaction Webcam</h2>
+
+    <video id="webcam" width="640" height="480" autoplay></video><br/>
+
+    <button onclick="on_cam()" style="background-color:aquamarine;">Turn it ON</button>
+    <button onclick="capture_image()" style="background-color:aquamarine;">Capture Image</button>
+    <button onclick="off_cam()" style="background-color:aquamarine;">Turn it OFF</button>
+
+    <h1 id='webcamoff'></h1>
+    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+    <img id="capturedImage" width="640" height="480" />
+
+    <script>
+      function on_cam(){
+        // Check if the browser supports the getUserMedia API
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+          // Access the webcam
+          navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+            // Attach the video stream to the video element
+            var webcam = document.getElementById('webcam');
+            webcam.srcObject = stream;
+            webcam.play();
+          });
+        }
+      }
+
+      function off_cam(){
+        var stream = document.getElementById('webcam').srcObject;
+        stream.getTracks().forEach(function(track) {
+          track.stop();
+        });
+        // Remove the video stream from the video element
+        document.getElementById('webcam').srcObject = null;
+        var msg = "Your cam is already turned off!";
+        document.getElementById('webcamoff').innerHTML = msg;
+      }
+
+      function capture_image(){
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var webcam = document.getElementById('webcam');
+
+        // Draw the video frame to the canvas
+        context.drawImage(webcam, 0, 0, canvas.width, canvas.height);
+
+        // Get the data URL of the image
+        var dataUrl = canvas.toDataURL('image/png');
+
+        // Display the captured image
+        var capturedImage = document.getElementById('capturedImage');
+        capturedImage.src = dataUrl;
+      }
+    </script>
+</body>
+</html>
