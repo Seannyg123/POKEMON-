@@ -106,6 +106,8 @@
     }
 
     function applyCanvasFilter(context) {
+      context.filter = 'none';
+
       if (currentFilter === 'grayscale') {
         context.filter = 'grayscale(100%)';
       } else if (currentFilter === 'sepia') {
@@ -155,9 +157,9 @@
     }
 
     function applyZoom() {
-      var capturedImage = document.getElementById('capturedImage');
-      capturedImage.style.transform = `scale(${zoomLevel})`;
-    }
+  var capturedImage = document.getElementById('capturedImage');
+  capturedImage.style.transform = `scale(${zoomLevel})`; 
+}
 
     function saveImage() {
       var capturedImage = document.getElementById('capturedImage');
