@@ -4,74 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Photo Booth App</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    h2 {
-      background-color: white;
-      opacity: 0.7;
-      padding: 10px;
-      margin-top: 20px;
-    }
-    video {
-      border: 2px solid #000;
-      margin: 10px 0;
-    }
-    canvas {
-      display: none;
-    }
-    img {
-      margin-top: 20px;
-      max-width: 100%;
-      border: 2px solid #000;
-      transition: transform 0.2s;
-    }
-    button {
-      background-color: aquamarine;
-      padding: 10px 20px;
-      border: none;
-      margin: 10px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: lightblue;
-    }
-    .countdown {
-      font-size: 30px;
-      color: red;
-    }
-    .filters {
-      margin-top: 20px;
-    }
-    .filters button {
-      background-color: #f1f1f1;
-      padding: 10px;
-      border: 2px solid #ccc;
-      margin: 5px;
-      cursor: pointer;
-    }
-    .filters button:hover {
-      background-color: #ddd;
-    }
-    .zoom-controls {
-      margin-top: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="photo.css">
 </head>
 <body>
 
   <h2>Photo Booth App</h2>
 
-  <video id="webcam" width="640" height="480" autoplay></video><br/>
-  <button onclick="on_cam()">Turn it ON</button>
-  <button onclick="capture_image()">Capture Image</button>
-  <button onclick="off_cam()">Turn it OFF</button>
+  <div class="controls">
+    <video id="webcam" width="640" height="480" autoplay></video><br/>
+    <button onclick="on_cam()">Turn it ON</button>
+    <button onclick="capture_image()">Capture Image</button>
+    <button onclick="off_cam()">Turn it OFF</button>
+  </div>
 
   <div id="countdown" class="countdown"></div>
 
-  <canvas id="canvas" width="640" height="480"></canvas>
+  <!-- Live video canvas (hidden) -->
+  <canvas id="canvas-live" width="640" height="480"></canvas>
+
+  <!-- Captured image canvas (hidden) -->
+  <canvas id="canvas-capture" width="640" height="480"></canvas>
   <img id="capturedImage" width="640" height="480" />
 
   <br/>
@@ -132,18 +84,18 @@
     }
 
     function capture_image() {
-      var canvas = document.getElementById('canvas');
-      var context = canvas.getContext('2d');
+      var canvasCapture = document.getElementById('canvas-capture');
+      var contextCapture = canvasCapture.getContext('2d');
       var webcam = document.getElementById('webcam');
 
-      // Draw the video frame to the canvas
-      context.drawImage(webcam, 0, 0, canvas.width, canvas.height);
+      // Draw the video frame to the captured canvas
+      contextCapture.drawImage(webcam, 0, 0, canvasCapture.width, canvasCapture.height);
 
       // Apply the selected filter if any
-      applyCanvasFilter(context);
+      applyCanvasFilter(contextCapture);
 
       // Get the data URL of the image
-      var dataUrl = canvas.toDataURL('image/png');
+      var dataUrl = canvasCapture.toDataURL('image/png');
 
       // Display the captured image
       var capturedImage = document.getElementById('capturedImage');
@@ -177,8 +129,18 @@
       currentFilter = filter;
       var capturedImage = document.getElementById('capturedImage');
       if (capturedImage.src) {
-        capturedImage.src = '';
-        capture_image();
+
+
+
+
+
+        // If there's an existing image, reapply filter
+        var canvasCapture = document.getElementById('canvas-capture');
+        var contextCapture = canvasCapture.getContext('2d');
+        contextCapture.drawImage(capturedImage, 0, 0, canvasCapture.width, canvasCapture.height);
+        applyCanvasFilter(contextCapture);
+        var dataUrl = canvasCapture.toDataURL('image/png');
+        capturedImage.src = dataUrl;
       }
     }
 
@@ -198,8 +160,8 @@
     }
 
     function saveImage() {
-      var canvas = document.getElementById('canvas');
-      var dataUrl = canvas.toDataURL('image/png');
+      var capturedImage = document.getElementById('capturedImage');
+      var dataUrl = capturedImage.src;
       var link = document.createElement('a');
       link.href = dataUrl;
       link.download = 'captured-image.png';
