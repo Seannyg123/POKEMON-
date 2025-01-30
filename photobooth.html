@@ -3,61 +3,209 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HCI Webcam</title>
+  <title>Photo Booth App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    h2 {
+      background-color: white;
+      opacity: 0.7;
+      padding: 10px;
+      margin-top: 20px;
+    }
+    video {
+      border: 2px solid #000;
+      margin: 10px 0;
+    }
+    canvas {
+      display: none;
+    }
+    img {
+      margin-top: 20px;
+      max-width: 100%;
+      border: 2px solid #000;
+      transition: transform 0.2s;
+    }
+    button {
+      background-color: aquamarine;
+      padding: 10px 20px;
+      border: none;
+      margin: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: lightblue;
+    }
+    .countdown {
+      font-size: 30px;
+      color: red;
+    }
+    .filters {
+      margin-top: 20px;
+    }
+    .filters button {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border: 2px solid #ccc;
+      margin: 5px;
+      cursor: pointer;
+    }
+    .filters button:hover {
+      background-color: #ddd;
+    }
+    .zoom-controls {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h2 style="background-color:white;opacity:0.5;">Human  Computer Interaction Webcam</h2>
 
-    <video id="webcam" width="640" height="480" autoplay></video><br/>
+  <h2>Photo Booth App</h2>
 
-    <button onclick="on_cam()" style="background-color:aquamarine;">Turn it ON</button>
-    <button onclick="capture_image()" style="background-color:aquamarine;">Capture Image</button>
-    <button onclick="off_cam()" style="background-color:aquamarine;">Turn it OFF</button>
+  <video id="webcam" width="640" height="480" autoplay></video><br/>
+  <button onclick="on_cam()">Turn it ON</button>
+  <button onclick="capture_image()">Capture Image</button>
+  <button onclick="off_cam()">Turn it OFF</button>
 
-    <h1 id='webcamoff'></h1>
-    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
-    <img id="capturedImage" width="640" height="480" />
+  <div id="countdown" class="countdown"></div>
 
-    <script>
-      function on_cam(){
-        // Check if the browser supports the getUserMedia API
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
-          // Access the webcam
-          navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-            // Attach the video stream to the video element
-            var webcam = document.getElementById('webcam');
-            webcam.srcObject = stream;
-            webcam.play();
-          });
-        }
-      }
+  <canvas id="canvas" width="640" height="480"></canvas>
+  <img id="capturedImage" width="640" height="480" />
 
-      function off_cam(){
-        var stream = document.getElementById('webcam').srcObject;
-        stream.getTracks().forEach(function(track) {
-          track.stop();
+  <br/>
+
+  <div class="filters">
+    <button onclick="applyFilter('grayscale')">Grayscale</button>
+    <button onclick="applyFilter('sepia')">Sepia</button>
+    <button onclick="applyFilter('invert')">Invert</button>
+    <button onclick="applyFilter('blur')">Blur</button>
+    <button onclick="applyFilter('brightness')">Brightness</button>
+    <button onclick="applyFilter('saturate')">Saturate</button>
+    <button onclick="applyFilter('contrast')">Contrast</button>
+  </div>
+
+  <div class="zoom-controls">
+    <button onclick="zoomIn()">Zoom In</button>
+    <button onclick="zoomOut()">Zoom Out</button>
+  </div>
+
+  <button onclick="saveImage()">Save Image</button>
+
+  <script>
+    let countdownInterval;
+    let countdown = 3;
+    let currentFilter = '';
+    let zoomLevel = 1;
+
+    function on_cam() {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+          var webcam = document.getElementById('webcam');
+          webcam.srcObject = stream;
+          webcam.play();
         });
-        // Remove the video stream from the video element
-        document.getElementById('webcam').srcObject = null;
-        var msg = "Your cam is already turned off!";
-        document.getElementById('webcamoff').innerHTML = msg;
       }
+    }
 
-      function capture_image(){
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        var webcam = document.getElementById('webcam');
+    function off_cam() {
+      var stream = document.getElementById('webcam').srcObject;
+      stream.getTracks().forEach(function(track) {
+        track.stop();
+      });
+      document.getElementById('webcam').srcObject = null;
+      document.getElementById('countdown').innerHTML = "Your cam is already turned off!";
+    }
 
-        // Draw the video frame to the canvas
-        context.drawImage(webcam, 0, 0, canvas.width, canvas.height);
+    function startCountdown() {
+      countdown = 3;
+      document.getElementById('countdown').style.display = 'block';
+      countdownInterval = setInterval(function() {
+        document.getElementById('countdown').innerHTML = countdown;
+        countdown--;
+        if (countdown < 0) {
+          clearInterval(countdownInterval);
+          capture_image();
+        }
+      }, 1000);
+    }
 
-        // Get the data URL of the image
-        var dataUrl = canvas.toDataURL('image/png');
+    function capture_image() {
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+      var webcam = document.getElementById('webcam');
 
-        // Display the captured image
-        var capturedImage = document.getElementById('capturedImage');
-        capturedImage.src = dataUrl;
+      // Draw the video frame to the canvas
+      context.drawImage(webcam, 0, 0, canvas.width, canvas.height);
+
+      // Apply the selected filter if any
+      applyCanvasFilter(context);
+
+      // Get the data URL of the image
+      var dataUrl = canvas.toDataURL('image/png');
+
+      // Display the captured image
+      var capturedImage = document.getElementById('capturedImage');
+      capturedImage.src = dataUrl;
+
+      // Hide the countdown
+      document.getElementById('countdown').style.display = 'none';
+    }
+
+    function applyCanvasFilter(context) {
+      if (currentFilter === 'grayscale') {
+        context.filter = 'grayscale(100%)';
+      } else if (currentFilter === 'sepia') {
+        context.filter = 'sepia(100%)';
+      } else if (currentFilter === 'invert') {
+        context.filter = 'invert(100%)';
+      } else if (currentFilter === 'blur') {
+        context.filter = 'blur(5px)';
+      } else if (currentFilter === 'brightness') {
+        context.filter = 'brightness(150%)';
+      } else if (currentFilter === 'saturate') {
+        context.filter = 'saturate(200%)';
+      } else if (currentFilter === 'contrast') {
+        context.filter = 'contrast(200%)';
+      } else {
+        context.filter = 'none';
       }
-    </script>
+    }
+
+    function applyFilter(filter) {
+      currentFilter = filter;
+      var capturedImage = document.getElementById('capturedImage');
+      if (capturedImage.src) {
+        capturedImage.src = '';
+        capture_image();
+      }
+    }
+
+    function zoomIn() {
+      zoomLevel *= 1.2;
+      applyZoom();
+    }
+
+    function zoomOut() {
+      zoomLevel /= 1.2;
+      applyZoom();
+    }
+
+    function applyZoom() {
+      var capturedImage = document.getElementById('capturedImage');
+      capturedImage.style.transform = `scale(${zoomLevel})`;
+    }
+
+    function saveImage() {
+      var canvas = document.getElementById('canvas');
+      var dataUrl = canvas.toDataURL('image/png');
+      var link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = 'captured-image.png';
+      link.click();
+    }
+  </script>
+
 </body>
 </html>
