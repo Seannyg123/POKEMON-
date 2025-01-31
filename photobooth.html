@@ -5,10 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Photo Booth App</title>
   <link rel="stylesheet" href="photo.css">
+  <style>
+    /* Ensure webcam video isn't mirrored */
+    #webcam {
+      transform: scaleX(1); /* Ensure the video is not mirrored */
+    }
+  </style>
 </head>
 <body>
 
-  <h2>Photo Booth App</h2>
+  <h2>Photo Booth</h2>
+  <p>by Cookie Bears</p>
 
   <div class="controls">
     <video id="webcam" width="640" height="480" autoplay></video><br/>
@@ -131,11 +138,6 @@
       currentFilter = filter;
       var capturedImage = document.getElementById('capturedImage');
       if (capturedImage.src) {
-
-
-
-
-
         // If there's an existing image, reapply filter
         var canvasCapture = document.getElementById('canvas-capture');
         var contextCapture = canvasCapture.getContext('2d');
@@ -157,9 +159,9 @@
     }
 
     function applyZoom() {
-  var capturedImage = document.getElementById('capturedImage');
-  capturedImage.style.transform = `scale(${zoomLevel})`; 
-}
+      var capturedImage = document.getElementById('capturedImage');
+      capturedImage.style.transform = `scale(${zoomLevel})`; 
+    }
 
     function saveImage() {
       var capturedImage = document.getElementById('capturedImage');
